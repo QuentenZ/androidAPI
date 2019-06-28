@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateSeriesTable extends Migration
+class CreateUserSeriesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,13 @@ class CreateSeriesTable extends Migration
      */
     public function up()
     {
-        Schema::create('series', function (Blueprint $table) {
+        Schema::create('user_series', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('name');
-            $table->integer('amountEpisode');
-            $table->integer('rating');
+            $table->integer("user_id");
+            $table->foreign('user_id')->references('id')->on('users');
+            $table->integer("series_id");
+            $table->foreign('series_id')->references('id')->on('series');
+            $table->integer("current_episode");
             $table->timestamps();
         });
     }
@@ -29,6 +31,6 @@ class CreateSeriesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('series');
+        Schema::dropIfExists('user_series');
     }
 }
